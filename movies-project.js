@@ -19,3 +19,9 @@ fetch(url)
             console.log(mov);
     });
 
+
+
+// Random Ideas:
+// Sound bites
+// Highlight reels to preview
+
