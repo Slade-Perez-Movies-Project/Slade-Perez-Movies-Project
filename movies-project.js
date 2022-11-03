@@ -30,23 +30,45 @@ $("#submit-btn").click(function(e) {
     e.preventDefault();
     const searchSound = new Audio("audio/search.wav");
     searchSound.play();
+
+    // Set Movie Object and Properties
     let moviePost = {};
     let movieTitle = document.getElementById("movieTitle").value;
     let genre = document.getElementById("genre").value;
     let rating = document.getElementById("rating").value;
     moviePost.title = movieTitle;
-    moviePost.genres = genre;
+    moviePost.genre = genre;
     moviePost.rating = rating;
-    console.log(moviePost);
+
+    // Set fetch Options for POST method
+    const postOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(moviePost),
+    };
 
     // Post New Movie
-    // const post = {
-    //     method: 'POST',
-    //     body: JSON.stringify()
-    // }
-    // fetch("https://faithful-marsh-soprano.glitch.me/posts")
-    //     .then(response => response.json())
-    //     .then(data => console.log(data));
+    fetch(url, postOptions)
+        .then(response => response.json())
+        .catch(response => console.log(response))
+
+    // Present Movies to Include New Movie
+    // todo: happening before post is complete, need find way to wait
+    // todo: make a function
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            let div = document.createElement('div');
+            div.classList.add("container");
+            let mov;
+            data.map(function(movieObj) {
+                mov = `Movie Title: ${movieObj.title}  -  ID: ${movieObj.id}  -  Rating: ${movieObj.rating}  -  Genre: ${movieObj.genre}`
+                div.append(mov);
+                document.body.append(div);
+            })
+        });
 })
 
 
