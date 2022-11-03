@@ -1,10 +1,10 @@
 
 let url = 'https://faithful-marsh-soprano.glitch.me/movies'
 
-
 // Page Loading Animation
 window.onload = function(){
     $('.loader-wrapper').fadeOut('slow');
+    document.getElementById("my_audio").play();
 };
 
 
@@ -30,7 +30,6 @@ $("#submit-btn").click(function(e) {
     e.preventDefault();
     const searchSound = new Audio("audio/search.wav");
     searchSound.play();
-
     // Set Movie Object and Properties
     let moviePost = {};
     let movieTitle = document.getElementById("movieTitle").value;
