@@ -4,6 +4,10 @@ let url = 'https://faithful-marsh-soprano.glitch.me/movies'
 // todo: sort to present alphabetically
 // todo: create function to create cards under data.map
 // todo: loading animation
+window.onload = function(){
+   $('.loader-wrapper').fadeOut('slow');
+};
+
 fetch(url)
     .then(response => response.json())
     .then(data => {
@@ -15,7 +19,7 @@ fetch(url)
                 div.append(mov);
                 document.body.append(div);
         })
-        // mov = data[0].title + data[0].id;
+        //mov = data[0].title + data[0].id;
             console.log(mov);
     });
 
