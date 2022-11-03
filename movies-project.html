@@ -8,20 +8,54 @@
 
 </head>
 <body>
-<!-- Change random picture -->
-<div class="content">
-    <img src="https://picsum.photos/300/300/?random" />
-</div>
-<!-- loading div -->
-<div class="loader-wrapper">
-    <span class="loader"><span class="loader-inner"></span></span>
+
+<div class="container">
+    <!-- Change random picture -->
+    <div class="content">
+    </div>
+    <!-- loading div -->
+    <div class="loader-wrapper">
+        <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+
+    <div id="post-container" class="m-3 p-3 border border-5">
+        <div class="mb-3">
+            <label for="movieTitle" class="form-label">Movie Title</label>
+            <input type="email" class="form-control" id="movieTitle" placeholder="Ex: Jiu Jitsu">
+        </div>
+        <label for="genre" class="form-label">Genre</label>
+        <select id="genre" class="form-select" aria-label="Default select example">
+            <option selected>Genre Menu</option>
+            <option value="Action">Action</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Horror">Horror</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Family">Family</option>
+            <option value="Drama">Drama</option>
+            <option value="Romance">Romance</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Musical">Musical</option>
+        </select><br>
+
+        <label for="rating" class="form-label">Rating</label>
+        <input type="range" class="form-range" min="0" max="5" id="rating">
+
+        <input id="submit-btn" class="btn btn-primary" type="submit" value="Submit">
+    </div>
+
+    <div id="movie-list-container">
+
+    </div>
 </div>
 
-<!--Custom JS-->
-<script src="movies-project.js"></script>
+
+
+
 <!--Bootstrap Script-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <!-- JQuery -->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<!--Custom JS-->
+<script src="movies-project.js"></script>
 </body>
 </html>
