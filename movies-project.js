@@ -1,5 +1,6 @@
 
 let url = 'https://faithful-marsh-soprano.glitch.me/movies'
+let movieList = document.getElementById('movieList')
 
 
 // Page Loading Animation
@@ -60,13 +61,35 @@ $("#submit-btn").click(function(e) {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            let div = document.createElement('div');
-            div.classList.add("container");
-            let mov;
+            // <div className="card" style="width: 18rem;">
+            //     <img src="..." className="card-img-top" alt="...">
+            //         <div className="card-body">
+            //             <h5 className="card-title">Card title</h5>
+            //             <p className="card-text">Some quick example text to build on the card title and make up the bulk
+            //                 of the card's content.</p>
+            //             <a href="#" className="btn btn-primary">Go somewhere</a>
+            //         </div>
+            // </div>
+            let container = document.createElement('div');
+            container.innerHTML = '';
+
+
             data.map(function(movieObj) {
-                mov = `Movie Title: ${movieObj.title}  -  ID: ${movieObj.id}  -  Rating: ${movieObj.rating}  -  Genre: ${movieObj.genre}`
-                div.append(mov);
-                document.body.append(div);
+                let container = document.createElement('div');
+                container.innerHTML = '';
+                let cardHTML = `<div class="card" style="width: 18rem">`;
+                cardHTML += `<img src="img/matrix-niccage.jpeg" class="card-img-top" alt="...">`;
+                cardHTML += `<div class="card-body">`;
+                cardHTML += `<h5 class="card-title">Movie Title: ${movieObj.title}  -  ID: ${movieObj.id}</h5>`;
+                cardHTML += `<p class="card-text">Rating: ${movieObj.rating} Genre: ${movieObj.genre}</p>`;
+                cardHTML += `<a href="#" class="btn btn-primary">Edit</a>`;
+                cardHTML += `<a href="#" class="btn btn-primary">Delete</a></div></div>`;
+                // let movieCard = document.createElement('div');
+                // movieCard.classList.add("card");
+                // movieCard = `Movie Title: ${movieObj.title}  -  ID: ${movieObj.id}  -  Rating: ${movieObj.rating}  -  Genre: ${movieObj.genre}`
+                // movieList.innerHTML(cardHTML);
+                container.innerHTML = cardHTML;
+                document.body.append(container);
             })
         });
 })
