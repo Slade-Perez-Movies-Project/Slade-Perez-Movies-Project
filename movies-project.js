@@ -26,6 +26,7 @@ fetch(url)
             cardHTML += `<img src="img/matrix-niccage.jpeg" class="card-img-top" alt="...">`;
             cardHTML += `<div class="card-body">`;
             cardHTML += `<h5 class="card-title">${movieObj.title}  -  ID: ${movieObj.id}</h5>`;
+            cardHTML += `<input type="hidden" id="movieId${movieObj.id}" value="${movieObj.id}">`;
             cardHTML += `<p class="card-text">Rating: ${movieObj.rating} Genre: ${movieObj.genre}</p>`;
             cardHTML += `<a href="#" class="btn btn-primary">Edit</a>`;
             cardHTML += `<a href="#" class="btn btn-primary delete-btn">Delete</a></div></div>`;
