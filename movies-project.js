@@ -29,7 +29,7 @@ fetch(url)
             cardHTML += `<input type="hidden" id="movieId${movieObj.id}" value="${movieObj.id}">`;
             cardHTML += `<p class="card-text">Rating: ${movieObj.rating} Genre: ${movieObj.genre}</p>`;
             cardHTML += `<a href="#" class="btn btn-primary">Edit</a>`;
-            cardHTML += `<a href="#" class="btn btn-primary delete-btn">Delete</a></div></div>`;
+            cardHTML += `<a href="#" class="btn btn-primary delete-btn" value="${movieObj.id}">Delete</a></div></div>`;
             // let movieCard = document.createElement('div');
             // movieCard.classList.add("card");
             // movieCard = `Movie Title: ${movieObj.title}  -  ID: ${movieObj.id}  -  Rating: ${movieObj.rating}  -  Genre: ${movieObj.genre}`
@@ -46,7 +46,7 @@ fetch(url)
                         'Content-Type': 'application/json',
                     },
                 }
-                fetch(`https://faithful-marsh-soprano.glitch.me/movies/${movieObj.id}`, delOptions)
+                fetch(`https://faithful-marsh-soprano.glitch.me/movies/${movieObj}`, delOptions)
                     .then(response => response.json())
                     .catch(response => console.log(response))
             });
