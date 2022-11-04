@@ -7,7 +7,18 @@ window.onload = function(){
     $('.loader-wrapper').fadeOut('slow');
     document.getElementById("my_audio").play();
 };
+//Delete a movie
+const deleteMovie = async (id) => {
+    try{
+        let deleteRequest = await fetch(url + `/${id}`,{
+            method : 'DELETE'
+        })
 
+        return deleteRequest
+    }catch(err){
+        console.error(err)
+    }
+}
 
 // Retrieve Movies List
 // todo: sort to present alphabetically
@@ -36,37 +47,32 @@ fetch(url)
             // movieList.innerHTML(cardHTML);
             container.innerHTML = cardHTML;
             document.body.append(container);
-            $('.delete-btn').click(function(e){
+            //$('.delete-btn').click(function(e){
+            //    e.preventDefault();
+            //    const nicRageSound = new Audio('audio/that-was-wrong-what-you-did.mp3');
+            //    nicRageSound.play();
+            //    const delOptions = {
+            //        method: 'DELETE',
+            //        headers: {
+            //            'Content-Type': 'application/json',
+            //        },
+            //    }
+            //    fetch(`https://faithful-marsh-soprano.glitch.me/movies/${movieObj}`, delOptions)
+            //        .then(response => response.json())
+            //        .catch(response => console.log(response))
+            //});
+            //DELETE things
+            $('.delete-btn').onclick = async e => {
+                console.log("test")
                 e.preventDefault();
                 const nicRageSound = new Audio('audio/that-was-wrong-what-you-did.mp3');
                 nicRageSound.play();
-                const delOptions = {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                let confirm = window.confirm(`Are you sure you want to delete ${movie.title}?`)
+                if (confirm) {
+                    await deleteMovie(movie.id)
                 }
-                fetch(`https://faithful-marsh-soprano.glitch.me/movies/${movieObj}`, delOptions)
-                    .then(response => response.json())
-                    .catch(response => console.log(response))
-            });
+            }
         });
-        //DELETE things
-        //$('.delete-btn').click(function(e){
-        //    e.preventDefault();
-        //    const nicRageSound = new Audio('audio/that-was-wrong-what-you-did.mp3');
-        //    nicRageSound.play();
-        //    const delOptions = {
-        //        method: 'DELETE',
-        //        headers: {
-        //            'Content-Type': 'application/json',
-        //        },
-        //    }
-        //    fetch(`https://faithful-marsh-soprano.glitch.me/movies`, delOptions)
-        //        .then(response => response.json())
-        //        .catch(response => console.log(response))
-        //});
-        //maybe if else statement? or am i trippin
     });
 
 
