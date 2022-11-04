@@ -50,7 +50,7 @@ const presentMovies = () => {
 
                 // Creating Card
                 let card = document.createElement("div");
-                card.classList.add("card", "m-3");
+                card.classList.add("card", "m-3", "d-flex");
                 // card.style = ("width: 18rem;");
 
                 // Create Card IMG
@@ -73,12 +73,12 @@ const presentMovies = () => {
                 // Create Edit Button
                 let editBtn = document.createElement("a");
                 editBtn.href = ("#");
-                editBtn.classList.add("btn", "btn-primary");
+                editBtn.classList.add("btn", "btn-primary", "d-inline-flex", "justify-content-start");
                 editBtn.innerText = ("Edit");
 
                 // Create Delete Button
                 let delBtn = document.createElement("a");
-                delBtn.classList.add("btn", "btn-success");
+                delBtn.classList.add("btn", "btn-success", "d-inline-flex", "justify-content-end");
                 delBtn.innerText= ("Delete");
 
 

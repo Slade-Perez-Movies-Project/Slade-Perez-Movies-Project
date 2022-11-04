@@ -56,12 +56,15 @@ body {
 
 .card {
     max-width: 200px;
+    height: 420px;
 }
 
 .container {
     align-items: start;
 }
 
+
 .title {
     overflow-wrap: break-word !important;
 }
+
