@@ -75,11 +75,12 @@ $("#submit-btn").click(function(e) {
 
             data.map(function(movieObj) {
                 let container = document.createElement('div');
+                container.classList.add("d-inline-block", "justify-content-center");
                 container.innerHTML = '';
-                let cardHTML = `<div class="card" style="width: 18rem">`;
+                let cardHTML = `<div class="card m-3" style="width: 18rem">`;
                 cardHTML += `<img src="img/matrix-niccage.jpeg" class="card-img-top" alt="...">`;
                 cardHTML += `<div class="card-body">`;
-                cardHTML += `<h5 class="card-title">Movie Title: ${movieObj.title}  -  ID: ${movieObj.id}</h5>`;
+                cardHTML += `<h5 class="card-title">${movieObj.title}  -  ID: ${movieObj.id}</h5>`;
                 cardHTML += `<p class="card-text">Rating: ${movieObj.rating} Genre: ${movieObj.genre}</p>`;
                 cardHTML += `<a href="#" class="btn btn-primary">Edit</a>`;
                 cardHTML += `<a href="#" class="btn btn-primary">Delete</a></div></div>`;
