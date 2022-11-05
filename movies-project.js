@@ -144,6 +144,36 @@ $("#submit-btn").click(function(e) {
 })
 
 
+// Get the modal
+var newMovieModal = document.getElementById("newMovieModal");
+
+// Get the button that opens the modal
+var newMovieBtn = document.getElementById("newMovieBtn");
+
+var submitBtn = document.getElementById("submit-btn");
+
+// Get the <div> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+newMovieBtn.onclick = function() {
+    newMovieModal.style.display = "block";
+}
+
+submitBtn.onclick = function() {
+    newMovieModal.style.display = "none";
+}
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    newMovieModal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        newMovieModal.style.display = "none";
+    }
+}
 // IDEAS:
 // Sound bites
 // Highlight reels to preview
