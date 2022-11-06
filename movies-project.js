@@ -218,4 +218,5 @@ window.onclick = function(event) {
 // Highlight reels to preview
 // Add Movie Posters
 // Customize Ratings Bar
+// Optional Image URL for New Movie
 
