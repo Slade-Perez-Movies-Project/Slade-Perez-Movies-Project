@@ -107,10 +107,13 @@ body {
     margin: auto;
     visibility: hidden;
     animation: spin 1s infinite linear;
+    z-index: 1;
 }
+
 #loading.display {
     visibility: visible;
 }
+
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -118,4 +121,31 @@ body {
     to {
         transform: rotate(360deg);
     }
+}
+
+input[type=range] {
+    display: block;
+    width: 100%;
+    margin: 0;
+    -webkit-appearance: none;
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    position: relative;
+    height: 12px;
+    border: 1px solid #b2b2b2;
+    border-radius: 5px;
+    background-color: #e2e2e2;
+    box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+input[type=range]::-webkit-slider-thumb {
+    position: relative;
+    border: 1px solid black;
+    -webkit-appearance: none;
+    background-color: red;
+    box-shadow: inset 0 -1px 2px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 100%;
+    cursor: pointer;
 }

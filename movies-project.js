@@ -30,21 +30,22 @@ $(".search-btn").click(function(e) {
 $("#submit-genre-filter").click(function(e) {
     e.preventDefault();
     let genreChoice = genreFilter.value;
+    console.log(genreChoice);
 })
 
 // Filter By Ratings
 $("#submit-rating-filter").click(function(e) {
     e.preventDefault();
     let ratingChoice = ratingFilter.value;
+    console.log(ratingChoice);
 })
 
-
+// Grab Updated Movies
 const updateMovies = async () => {
     try {
-        let moviesRequest = await fetch(url)
-        let moviesData = await moviesRequest.json()
+        let updateRequest = await fetch(url)
+        let moviesData = await updateRequest.json()
         allMovies = moviesData
-        console.log(allMovies)
     }catch(err){
         console.error(err)
     } }
@@ -113,16 +114,12 @@ const editMovie = async(id, movieObj) => {
 }
 
 
-// Clear Movie List Div -- Not Working
+// Clear Movie List Div
 const clearMovies = () => {
-    // let div = document.getElementById("movieList");
-    // div.innerHTMl = '';
     $("#movieList").empty();
 }
 
 // Retrieve Movies List
-// todo: sort to present alphabetically
-// todo: create function to create cards under data.map
 const presentMovies = () => {
     // Grab Placeholder Div from HTML
     let container = document.getElementById('movieList');
@@ -136,8 +133,6 @@ const presentMovies = () => {
             clearMovies();
             hideLoading();
             data.map(function(movieObj) {
-                console.log(movieObj);
-
                 // Create Card Body
                 let cardBody = document.createElement("div");
                 cardBody.classList.add("card-body", "p-0", "border-0");
@@ -162,7 +157,6 @@ const presentMovies = () => {
                 let cardDescription = document.createElement("p");
                 cardDescription.classList.add("card-text");
                 cardDescription.innerText = `${movieObj.rating} Stars - ${movieObj.genre}`;
-
 
                 // Create Edit Button
                 let editBtn = document.createElement("a");
@@ -198,7 +192,6 @@ const presentMovies = () => {
                     let confirm = window.confirm(`Are you sure you want to edit ${movieObj.title}?`)
                     if (confirm) {
                         currentMovie = movieObj;
-                        console.log(movieObj)
                         editMovieModal.style.display = "block";
 
                         // Populate Inputs with Current Movie Info
@@ -225,7 +218,6 @@ const presentMovies = () => {
                         moviePut.genre = genre;
                         moviePut.rating = rating;
                         moviePut.id = currentMovie.id;
-                        console.log(moviePut);
 
                         await editMovie(currentMovie.id, moviePut);
                         await updateMovies();
@@ -248,9 +240,8 @@ const presentMovies = () => {
             });
         });
 }
+
 presentMovies();
-
-
 
 
 // Page Loading Animation
@@ -302,6 +293,8 @@ window.onclick = function(event) {
         newMovieModal.style.display = "none";
     }
 }
+
+
 // IDEAS:
 // Sound bites
 // Highlight reels to preview
