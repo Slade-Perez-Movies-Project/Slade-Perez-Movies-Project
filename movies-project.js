@@ -1,15 +1,15 @@
 
 let url = 'https://faithful-marsh-soprano.glitch.me/movies'
 let movieList = document.getElementById('movieList')
-let moviesArray = [];
+var editMovieModal = document.getElementById("editMovieModal");
 
 // Page Loading Animation
 window.onload = function(){
     $('.loader-wrapper').fadeOut('slow');
-    document.getElementById("my_audio").play();
+    // document.getElementById("my_audio").play();
 };
 
-//Delete a movie
+// Delete movie
 const deleteMovie = async (id) => {
     try{
         let deleteRequest = await fetch(url + `/${id}`,{
@@ -19,6 +19,23 @@ const deleteMovie = async (id) => {
         return deleteRequest
     }catch(err){
         console.error(err)
+    }
+}
+
+
+// Edit Movie
+const editMovie = async(id, movieObj) => {
+    try{
+        let editRequest = await fetch(url + `/${id}`, {
+            method: 'POST',
+            body: JSON.stringify(movieObj),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        return editRequest
+    } catch(err) {
+        console.log(err)
     }
 }
 
@@ -41,7 +58,6 @@ const presentMovies = () => {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             data.forEach(function(movieObj) {
 
                 // Create Card Body
@@ -68,7 +84,7 @@ const presentMovies = () => {
                 // Create Card Description
                 let cardDescription = document.createElement("p");
                 cardDescription.classList.add("card-text");
-                cardDescription.innerText = movieObj.rating;
+                cardDescription.innerText = `${movieObj.rating} - ${movieObj.genre}`;
 
                 // Create Edit Button
                 let editBtn = document.createElement("a");
@@ -83,7 +99,6 @@ const presentMovies = () => {
 
 
                 $(delBtn).click( async e => {
-                    console.log("test")
                     e.preventDefault();
                     const nicRageSound = new Audio('audio/that-was-wrong-what-you-did.mp3');
                     nicRageSound.play();
@@ -93,9 +108,26 @@ const presentMovies = () => {
                     }
                 })
 
+                $(editBtn).click( async e => {
+                    e.preventDefault();
+                    const nicRageSound = new Audio('audio/that-was-wrong-what-you-did.mp3');
+                    nicRageSound.play();
+                    let confirm = window.confirm(`Are you sure you want to edit ${movieObj.title}?`)
+                    if (confirm) {
+                        editMovieModal.style.display = "block";
+                        let currentMovie = movieObj;
+
+                        // Populate Inputs with Current Movie Info
+                        document.getElementById("edit-title").placeholder = `${movieObj.title}`;
+                        document.getElementById("edit-genre").value = `${movieObj.genre}`
+                        document.getElementById("edit-rating").value = `${movieObj.rating}`;
+
+                        await editMovie(`${movieObj.id}`, movieObj)
+                    }
+                })
+
 
                 // Append Everything
-
                 cardBody.appendChild(cardImg);
                 cardBody.appendChild(cardTitle);
                 cardBody.appendChild(cardDescription);
@@ -110,15 +142,16 @@ presentMovies();
 
 
 // Post New Movie
-$("#submit-btn").click(function(e) {
+$("#new-submit-btn").click(function(e) {
     e.preventDefault();
     const searchSound = new Audio("audio/search.wav");
     searchSound.play();
+
     // Set Movie Object and Properties
     let moviePost = {};
-    let movieTitle = document.getElementById("movieTitle").value;
-    let genre = document.getElementById("genre").value;
-    let rating = document.getElementById("rating").value;
+    let movieTitle = document.getElementById("new-movie-title").value;
+    let genre = document.getElementById("new-movie-genre").value;
+    let rating = document.getElementById("new-rating").value;
     moviePost.title = movieTitle;
     moviePost.genre = genre;
     moviePost.rating = rating;
@@ -139,18 +172,17 @@ $("#submit-btn").click(function(e) {
 
     // Present Movies to Include New Movie
     // todo: happening before post is complete, need find way to wait
-    // todo: make a function
-
 })
 
-
+// Modal Functionality
 // Get the modal
 var newMovieModal = document.getElementById("newMovieModal");
 
 // Get the button that opens the modal
 var newMovieBtn = document.getElementById("newMovieBtn");
 
-var submitBtn = document.getElementById("submit-btn");
+var newSubmitBtn = document.getElementById("new-submit-btn");
+var editSubmitBtn = document.getElementById("edit-submit-btn");
 
 // Get the <div> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -160,9 +192,16 @@ newMovieBtn.onclick = function() {
     newMovieModal.style.display = "block";
 }
 
-submitBtn.onclick = function() {
+newSubmitBtn.onclick = function() {
     newMovieModal.style.display = "none";
 }
+
+editSubmitBtn.onclick = function(e) {
+    e.preventDefault()
+    editMovieModal.style.display = "none";
+}
+
+
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     newMovieModal.style.display = "none";
@@ -170,7 +209,7 @@ span.onclick = function() {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target == newMovieModal) {
         newMovieModal.style.display = "none";
     }
 }
