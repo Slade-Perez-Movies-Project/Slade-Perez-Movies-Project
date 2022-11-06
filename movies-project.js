@@ -4,7 +4,8 @@ var editMovieModal = document.getElementById("editMovieModal");
 var search = document.querySelector('#movie-search');
 var genreFilter = document.querySelector("#filter-genre");
 var ratingFilter = document.querySelector("#filter-rating");
-const loader = document.querySelector("#loading")
+const loader = document.querySelector("#loading");
+var currentMovie = null;
 
 
 // Loading Animation Functions
@@ -37,8 +38,19 @@ $("#submit-rating-filter").click(function(e) {
     let ratingChoice = ratingFilter.value;
 })
 
+
+const updateMovies = async () => {
+    try {
+        let moviesRequest = await fetch(url)
+        let moviesData = await moviesRequest.json()
+        allMovies = moviesData
+        console.log(allMovies)
+    }catch(err){
+        console.error(err)
+    } }
+
 // Add New Movie
-$("#new-submit-btn").click(function(e) {
+$("#new-submit-btn").click(async function(e) {
     e.preventDefault();
     const searchSound = new Audio("audio/search.wav");
     searchSound.play();
@@ -60,11 +72,13 @@ $("#new-submit-btn").click(function(e) {
     };
 
     // Post New Movie
-    fetch(url, postOptions)
-        .then(response => response.json())
-        .catch(response => console.log(response))
+    try {
+        await fetch(url, postOptions)
+        presentMovies()
+    } catch(err) {
+        console.log(err);
+    }
 
-    presentMovies();
 
     // Present Movies to Include New Movie
     // todo: happening before post is complete, need find way to wait
@@ -74,11 +88,9 @@ $("#new-submit-btn").click(function(e) {
 // Delete movie
 const deleteMovie = async (id) => {
     try {
-        let deleteRequest = await fetch(url + `${id}`,{
+        await fetch(url + `${id}`,{
             method : 'DELETE'
         })
-
-        return deleteRequest
     } catch(err) {
         console.error(err)
     }
@@ -88,14 +100,13 @@ const deleteMovie = async (id) => {
 // Edit Movie
 const editMovie = async(id, movieObj) => {
     try{
-        let editRequest = await fetch(url + `${id}`, {
+        await fetch(url + `${id}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(movieObj),
         })
-        return editRequest
     } catch(err) {
         console.log(err)
     }
@@ -104,8 +115,9 @@ const editMovie = async(id, movieObj) => {
 
 // Clear Movie List Div -- Not Working
 const clearMovies = () => {
-    let div = document.getElementById("movieList");
-    div.innerHTMl = '';
+    // let div = document.getElementById("movieList");
+    // div.innerHTMl = '';
+    $("#movieList").empty();
 }
 
 // Retrieve Movies List
@@ -117,21 +129,22 @@ const presentMovies = () => {
     container.classList.add("flex-wrap", "align-items-start");
 
     displayLoading();
-    clearMovies();
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
+            clearMovies();
             hideLoading();
             data.map(function(movieObj) {
+                console.log(movieObj);
 
                 // Create Card Body
                 let cardBody = document.createElement("div");
-                cardBody.classList.add("card-body");
+                cardBody.classList.add("card-body", "p-0", "border-0");
 
                 // Creating Card
                 let card = document.createElement("div");
-                card.classList.add("card", "movie-card", "m-3", "d-flex", "bg-light");
+                card.classList.add("card", "movie-card", "m-3", "d-flex", "bg-light", "text-center", "border-0");
                 // card.style = ("width: 18rem;");
 
                 // Create Card IMG
@@ -142,25 +155,26 @@ const presentMovies = () => {
 
                 // Create Card Title
                 let cardTitle = document.createElement("h5");
-                cardTitle.classList.add("card-title", "title");
+                cardTitle.classList.add("card-title", "title", "m-2");
                 cardTitle.innerText = movieObj.title
 
                 // Create Card Description
                 let cardDescription = document.createElement("p");
                 cardDescription.classList.add("card-text");
-                cardDescription.innerText = `${movieObj.rating} - ${movieObj.genre}`;
+                cardDescription.innerText = `${movieObj.rating} Stars - ${movieObj.genre}`;
+
 
                 // Create Edit Button
                 let editBtn = document.createElement("a");
                 editBtn.href = ("#");
-                editBtn.classList.add("btn", "btn-primary", "d-inline-flex", "justify-content-start");
+                editBtn.classList.add("btn", "btn-dark", "alter-movie", "d-inline-flex", "p-1", "rounded-circle");
                 editBtn.innerHTML = ("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-pencil-fill\" viewBox=\"0 0 16 16\">\n" +
                     "  <path d=\"M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z\"/>\n" +
                     "</svg>");
 
                 // Create Delete Button
                 let delBtn = document.createElement("a");
-                delBtn.classList.add("btn", "btn-success", "d-inline-flex", "justify-content-end");
+                delBtn.classList.add("btn", "btn-dark", "alter-movie", "d-inline-flex", "p-1", "rounded-circle");
                 delBtn.innerHTML= ("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-trash3-fill\" viewBox=\"0 0 16 16\">\n" +
                     "  <path d=\"M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z\"/>\n" +
                     "</svg>");
@@ -183,8 +197,9 @@ const presentMovies = () => {
                     nicRageSound.play();
                     let confirm = window.confirm(`Are you sure you want to edit ${movieObj.title}?`)
                     if (confirm) {
+                        currentMovie = movieObj;
+                        console.log(movieObj)
                         editMovieModal.style.display = "block";
-                        let currentMovie = movieObj;
 
                         // Populate Inputs with Current Movie Info
                         document.getElementById("edit-title").placeholder = `${movieObj.title}`;
@@ -194,6 +209,31 @@ const presentMovies = () => {
                         await editMovie(movieObj.id, movieObj);
                         await presentMovies();
                     }
+
+                    // Edit Movie
+                    $("#edit-submit-btn").click(async function(e) {
+                        e.preventDefault();
+                        const searchSound = new Audio("audio/search.wav");
+                        await searchSound.play();
+
+                        // Set Movie Object and Properties
+                        let moviePut = {};
+                        let movieTitle = document.getElementById("edit-title").value;
+                        let genre = document.getElementById("edit-genre").value;
+                        let rating = document.getElementById("edit-rating").value;
+                        moviePut.title = movieTitle;
+                        moviePut.genre = genre;
+                        moviePut.rating = rating;
+                        moviePut.id = currentMovie.id;
+                        console.log(moviePut);
+
+                        await editMovie(currentMovie.id, moviePut);
+                        await updateMovies();
+                        await presentMovies();
+
+                        // Present Movies to Include New Movie
+                        // todo: happening before post is complete, need find way to wait
+                    })
                 })
 
 
@@ -211,39 +251,7 @@ const presentMovies = () => {
 presentMovies();
 
 
-// Edit Movie
-$("#edit-submit-btn").click(function(e) {
-    e.preventDefault();
-    const searchSound = new Audio("audio/search.wav");
-    searchSound.play();
 
-    // Set Movie Object and Properties
-    let moviePut = {};
-    let movieTitle = document.getElementById("edit-title").value;
-    let genre = document.getElementById("edit-genre").value;
-    let rating = document.getElementById("edit-rating").value;
-    moviePut.title = movieTitle;
-    moviePut.genre = genre;
-    moviePut.rating = rating;
-    console.log(moviePut);
-
-    // Set fetch Options for POST method
-    const putOptions = {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(moviePut),
-    };
-
-    // PUT New Movie
-    fetch(url , putOptions)
-        .then(response => response.json())
-        .catch(response => console.log(response))
-
-    // Present Movies to Include New Movie
-    // todo: happening before post is complete, need find way to wait
-})
 
 // Page Loading Animation
 window.onload = function(){
