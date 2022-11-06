@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 </head>
-<body>
+<body class="bg-dark">
 <!--<audio src="audio/what-are-you-doing-in-my-house.mp3" id="my_audio" autoplay="autoplay"></audio>-->
 
 
@@ -16,19 +16,63 @@
     <div class="container-fluid">
         <a class="navbar-brand">Nic's Movie Cage</a>
         <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <input id="movie-search" class="search-click" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-danger search-btn" type="submit">Search</button>
         </form>
     </div>
 </nav>
 
 
-<!--Main Container-->
-<div class="container">
+<!--Sub Header-->
+<div id="sub-header" class="d-flex justify-content-start bg-dark">
+    <!--Filter by Genre-->
+    <div class="d-inline-block m-2 align-items-center">
+        <div class="d-flex justify-content-center mb-2">
+            <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Sort by Genre
+            </a>
+        </div>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body m-0 p-0 border-0 bg-dark">
+                <select id="filter-genre" class="form-select" aria-label="filter-genre">
+                    <option value="Action">Action</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Family">Family</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Musical">Musical</option>
+                </select><br>
+                <button id="submit-genre-filter" class="btn btn-outline-danger search-btn m-0" type="submit">Browse</button>
+            </div>
+        </div>
+    </div>
 
+    <!--Filter by Rating-->
+    <div class="d-inline-block m-2">
+        <div class="d-flex justify-content-center mb-2">
+            <a class="btn btn-danger" data-bs-toggle="collapse" href="#rating-list" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Sort by Rating
+            </a>
+        </div>
+        <div class="collapse" id="rating-list">
+            <div class="card card-body m-0 p-0 border-0 bg-dark">
+                <select id="filter-rating" class="form-select" aria-label="filter-genre">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select><br>
+                <button id="submit-rating-filter" class="btn btn-outline-danger search-btn" type="submit">Browse</button>
+            </div>
+        </div>
+    </div>
 
-<!--    New Movie Modal-->
-    <button id="newMovieBtn">Add a New Movie!</button>
+    <!--    New Movie Modal-->
+    <button id="newMovieBtn" class="btn btn-danger m-2">Add a New Movie</button>
     <div id="newMovieModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -58,7 +102,11 @@
             </div>
         </div>
     </div>
+</div>
 
+
+<!--Main Container-->
+<div class="container">
 <!--todo: edit movie close span doesn't work-->
 <!--    Edit Movie Modal-->
     <div id="editMovieModal" class="modal">
@@ -95,16 +143,13 @@
     </div>
 
 
-    <!-- Change random picture -->
-    <div class="content d-flex" id="movieList">
-    </div>
-
-    <!-- loading div -->
-    <div class="loader-wrapper">
-        <span class="loader"><span class="loader-inner"></span></span>
+    <!-- Movies Go Here -->
+    <div class="content d-flex bg-dark" id="movieList">
     </div>
 
 
+    <!-- Loading Circle -->
+    <div id="loading"></div>
 </div>
 
 
