@@ -38,6 +38,7 @@ $("#submit-rating-filter").click(function(e) {
     e.preventDefault();
     let ratingChoice = ratingFilter.value;
     console.log(ratingChoice);
+    //maybe if statement
 })
 
 // Grab Updated Movies
@@ -150,12 +151,12 @@ const presentMovies = () => {
 
                 // Create Card Title
                 let cardTitle = document.createElement("h5");
-                cardTitle.classList.add("card-title", "title", "m-2");
+                cardTitle.classList.add("card-title", "title", "m-2", "grow");
                 cardTitle.innerText = movieObj.title
 
                 // Create Card Description
                 let cardDescription = document.createElement("p");
-                cardDescription.classList.add("card-text");
+                cardDescription.classList.add("card-text", "grow");
                 cardDescription.innerText = `${movieObj.rating} Stars - ${movieObj.genre}`;
 
                 // Create Edit Button

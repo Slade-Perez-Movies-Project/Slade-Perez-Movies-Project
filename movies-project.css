@@ -150,6 +150,10 @@ input[type=range]::-webkit-slider-thumb {
     cursor: pointer;
 }
 
+.btn-danger{
+    justify-content: space-evenly !important;
+}
+
 .bottom {
     margin-top: 3rem !important;
 }
@@ -193,3 +197,4 @@ input[type=range]::-webkit-slider-thumb {
         text-shadow: 0 0 20px #fff, 0 0 30px darkred, 0 0 40px darkred, 0 0 50px darkred, 0 0 60px darkred, 0 0 70px darkred, 0 0 80px darkred;
     }
 }
+
