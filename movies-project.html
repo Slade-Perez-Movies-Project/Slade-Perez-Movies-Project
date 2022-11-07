@@ -5,20 +5,15 @@
     <title>Movies Project</title>
     <link rel="stylesheet" href="movies-project.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
 </head>
 <body class="bg-dark">
-<!--<audio src="audio/what-are-you-doing-in-my-house.mp3" id="my_audio" autoplay="autoplay"></audio>-->
-
-
 <!--Nav Bar-->
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand">Nic's Movie Cage</a>
+        <a class="navbar-brand mx-3">Nic's Movie Cage</a>
         <img src="img/nic%20cage%20face.png" class="nicFace">
-        <form class="d-flex">
+        <form class="d-flex mx-3">
             <input id="movie-search" class="search-click" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-danger search-btn" type="submit">Search</button>
         </form>
     </div>
 </nav>
@@ -26,8 +21,9 @@
 
 <!--Sub Header-->
 <div id="sub-header" class="d-flex justify-content-start bg-dark">
+
     <!--Filter by Genre-->
-    <div class="d-inline-block m-2 align-items-center">
+    <div class="d-inline-block mx-3 my-2 align-items-center">
         <div class="d-flex justify-content-center mb-2">
             <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Sort by Genre
@@ -52,7 +48,7 @@
     </div>
 
     <!--Filter by Rating-->
-    <div class="d-inline-block m-2">
+    <div class="d-inline-block mx-3 my-2">
         <div class="d-flex justify-content-center mb-2">
             <a class="btn btn-danger" data-bs-toggle="collapse" href="#rating-list" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Sort by Rating
@@ -74,7 +70,7 @@
     </div>
 
     <!--    New Movie Modal-->
-    <button id="newMovieBtn" class="btn btn-danger ms-auto m-2 text-nowrap" style="height: 38px;">Add a New Movie</button>
+    <button id="newMovieBtn" class="btn btn-danger mx-3 my-2 text-nowrap" style="height: 38px;">Add a New Movie</button>
     <div id="newMovieModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -109,8 +105,6 @@
 
 <!--Main Container-->
 <div class="container">
-<!--todo: edit movie close span doesn't work-->
-<!--    Edit Movie Modal-->
     <div id="editMovieModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -144,16 +138,13 @@
         </div>
     </div>
 
-
     <!-- Movies Go Here -->
     <div class="content d-flex bg-dark" id="movieList">
     </div>
 
-
     <!-- Loading Circle -->
     <div id="loading"></div>
 </div>
-
 
 
 <!--Bootstrap Script-->
