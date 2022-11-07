@@ -6,6 +6,7 @@ var genreFilter = document.querySelector("#filter-genre");
 var ratingFilter = document.querySelector("#filter-rating");
 const loader = document.querySelector("#loading");
 var currentMovie = null;
+var movieCollection = [];
 
 
 // Loading Animation Functions
@@ -19,26 +20,84 @@ function hideLoading() {
     loader.classList.remove("display");
 }
 
+function renderSearchedMovies(arr) {
+    let html = '';
+
+    html += `<div class="card-body p-0 border-0">`
+    html += `<div class="card movie-card m-3 d-flex bg-light text-center border-0 grow">`
+    html += `<img class="card-img-top poster" src="img/matrix-niccage.jpeg">`
+    html += `<h5 class="card-title title m-2 grow">${arr.title}</h5>`
+    html += `<p class="card-text grow">${arr.rating} Stars -- ${arr.genre}</p>`
+    html += `<a class="btn btn-dark alter-movie d-inline-flex p-1 rounded-circle bottom" href="#">Trash Btn</a>`
+    html += `<a class="btn btn-dark alter-movie d-inline-flex p-1 rounded-circle bottom">Edit Btn</a>`
+    html += `</div>`
+    html += `</div>`
+
+    return html
+}
+
+function searchResults(arr) {
+    let html = '';
+    for (let i = 0; i < arr.length; i++) {
+        html += renderSearchedMovies(arr[i]);
+    }
+    return html;
+}
+
+function searchMovies(searchedStr) {
+    let matchArray = [];
+
+    movieCollection.forEach(function (movieObj) {
+        if (movieObj.title.toLowerCase().includes(searchedStr.toLowerCase())) {
+            matchArray.push(movieObj);
+        }
+    })
+    // $("#movieList").html(searchResults(matchArray));
+    $("#movieList").html((searchResults(matchArray)))
+}
 
 // Movie Search Function
-$(".search-btn").click(function(e) {
+$("#movie-search").keyup(function(e) {
     e.preventDefault();
-    let searchedStr = search.value;
+    searchMovies(search.value);
 })
 
+
+function searchGenre(movieGenre) {
+    let genreArray = [];
+    movieCollection.forEach(function (movieObj) {
+        if (movieObj.genre.toLowerCase().includes(movieGenre.toLowerCase())) {
+            genreArray.push(movieObj);
+            console.log(genreArray);
+        }
+    })
+    // $("#movieList").html(searchResults(matchArray));
+    $("#movieList").html((searchResults(genreArray)))
+}
+
+
 // Filter By Genres
-$("#submit-genre-filter").click(function(e) {
+$("#filter-genre").change(function(e) {
     e.preventDefault();
     let genreChoice = genreFilter.value;
     console.log(genreChoice);
+    searchGenre(genreFilter.value)
 })
 
+function searchRatings(range) {
+    let genreArray = [];
+    movieCollection.forEach(function (movieObj) {
+        if (movieObj.rating === range) {
+            genreArray.push(movieObj);
+        }
+    })
+    $("#movieList").html((searchResults(genreArray)))
+}
+
 // Filter By Ratings
-$("#submit-rating-filter").click(function(e) {
+$("#filter-rating").change(function(e) {
     e.preventDefault();
-    let ratingChoice = ratingFilter.value;
-    console.log(ratingChoice);
-    //maybe if statement
+    searchRatings(ratingFilter.value)
 })
 
 // Grab Updated Movies
@@ -134,6 +193,7 @@ const presentMovies = () => {
             clearMovies();
             hideLoading();
             data.map(function(movieObj) {
+                movieCollection.push(movieObj);
                 // Create Card Body
                 let cardBody = document.createElement("div");
                 cardBody.classList.add("card-body", "p-0", "border-0");
